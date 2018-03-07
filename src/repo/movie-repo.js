@@ -9,7 +9,7 @@ const repository = (db) => {
     };
     const sendMovies = (err) => {
       if (err) {
-        reject(new Error(`An error occured fetching all movies, err:${err}`));
+        reject(new Error(`An error occurred fetching all movies, err:${err}`));
       }
       resolve(movies.slice());
     };
@@ -38,7 +38,7 @@ const repository = (db) => {
     };
     const sendMovies = (err) => {
       if (err) {
-        reject(new Error(`An error occured fetching all movies, err:${err}`));
+        reject(new Error(`An error occurred fetching all movies, err:${err}`));
       }
       resolve(movies);
     };
@@ -51,7 +51,7 @@ const repository = (db) => {
     };
     const sendMovie = (err, movie) => {
       if (err) {
-        reject(new Error(`An error occured fetching a movie with id: ${id}, err: ${err}`));
+        reject(new Error(`An error occurred fetching a movie with id: ${id}, err: ${err}`));
       }
       resolve(movie);
     };
