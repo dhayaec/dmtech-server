@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fastify = require('fastify')({ logger: process.env.NODE_ENV === 'development' });
 const movies = require('./api/movies');
 const dbConnector = require('./db-connector');
@@ -11,7 +12,7 @@ process.on('uncaughtRejection', (err, promise) => {
 });
 
 fastify.register(dbConnector, {
-  url: 'mongodb://dhayathedev:dhaya123456@ds259768.mlab.com:59768/fastify-test',
+  url: `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/fastify-test`,
 });
 
 fastify.register(movies);

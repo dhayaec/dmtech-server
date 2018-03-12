@@ -70,11 +70,4 @@ const repository = (db) => {
   });
 };
 
-const connect = connection => new Promise((resolve, reject) => {
-  if (!connection) {
-    reject(new Error('connection db not supplied!'));
-  }
-  resolve(repository(connection));
-});
-
-module.exports = Object.assign({}, { connect });
+module.exports = repository;

@@ -1,25 +1,27 @@
+const httpErrors = require('http-errors');
+const movieRepository = require('../repository/movie-repository');
+
 async function routes(fastify) {
-  const database = fastify.mongo.db('db');
-  const collection = database.collection('test');
+  const db = fastify.mongo.db('fastify-test');
 
-  fastify.get('/', async () => ({ hello: 'world' }));
+  fastify.get('/movies', async (req, reply) => {
+    const result = await movieRepository(db).getAllMovies();
+    reply.code(200).send(result);
+  });
 
-  fastify.get('/one', async () => ({ hello: 'one' }));
+  fastify.get('/movies/premieres', async (req, reply) => {
+    const result = await movieRepository(db).getMoviePremiers();
+    reply.code(200).send(result);
+  });
 
-  fastify.get('/two', async () => ({ hello: 'two' }));
-
-  fastify.get('/three', async () => ({ hello: 'three' }));
-
-  fastify.get('/search/:id', async (request) => {
-    const { params: { id } } = request;
-
-    const result = await collection.findOne({ id });
-
-    if (result.value === null) {
-      throw new Error('Invalid value');
+  fastify.get('/movies/:id', async (req, reply) => {
+    const { params: { id } } = req;
+    const result = await movieRepository(db).getMovieById(id);
+    if (result === null) {
+      reply.send(httpErrors.NotFound());
+    } else {
+      reply.code(200).send(result);
     }
-
-    return result.value;
   });
 }
 

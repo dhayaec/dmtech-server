@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 
 async function dbConnector(fastify, options) {
   const { url } = options;
-  const db = await MongoClient.connect(url, { uri_decode_auth: true });
+  const db = await MongoClient.connect(url);
 
   fastify.decorate('mongo', db);
 }
