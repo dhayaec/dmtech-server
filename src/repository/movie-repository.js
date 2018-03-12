@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const repository = (db) => {
   const collection = db.collection('movies');
 
@@ -55,19 +57,19 @@ const repository = (db) => {
       }
       resolve(movie);
     };
-    collection.findOne({ id }, projection, sendMovie);
+    collection.findOne({ _id: ObjectId(id) }, projection, sendMovie);
   });
 
   const disconnect = () => {
     db.close();
   };
 
-  return Object.create({
+  return {
     getAllMovies,
     getMoviePremiers,
     getMovieById,
     disconnect,
-  });
+  };
 };
 
 module.exports = repository;
